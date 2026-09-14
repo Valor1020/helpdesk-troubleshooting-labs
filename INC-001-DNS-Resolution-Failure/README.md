@@ -182,6 +182,11 @@ ping -c 4 8.8.8.8
 `google.com` successfully resolved to an IP address and responded with 0% packet loss. Direct connectivity to `8.8.8.8` also remained successful with 0% packet loss.
 
 These results confirmed that DNS name resolution had been restored without disrupting the workstation's existing IP connectivity. The original reported symptom was no longer present, and the incident was considered resolved.
+### Evidence: Final Verification
+
+![Final verification showing restored DNS resolution and network configuration](screenshots/04-final-verification.png)
+
+*Figure 4 — Final verification confirmed successful hostname resolution and direct external IP connectivity with 0% packet loss. `resolvectl` showed the restored DNS server `192.168.105.2`, while `nmcli` confirmed the expected IPv4 address, default gateway, and DNS configuration.*
 
 ## Lessons Learned
 
