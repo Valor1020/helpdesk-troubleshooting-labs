@@ -215,3 +215,23 @@ The primary takeaway from this incident is to troubleshoot systematically: estab
 | `nmcli device show ens33` | Inspect NetworkManager configuration for the Ethernet interface |
 | `nmcli connection modify` | Modify the NetworkManager connection profile |
 | `nmcli connection down/up` | Restart the connection to apply configuration changes |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
