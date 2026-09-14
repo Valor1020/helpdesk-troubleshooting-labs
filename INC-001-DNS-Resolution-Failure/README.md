@@ -96,7 +96,11 @@ ping -c 4 192.0.2.1
 The test resulted in 100% packet loss.
 
 A failed ICMP test alone does not conclusively prove that a DNS service is unavailable because a host may be configured to ignore ICMP traffic. However, when combined with the successful external IP connectivity, failed hostname resolution, and active resolver configuration, the results provided additional evidence supporting the DNS configuration as the likely fault domain.
+### Evidence: DNS Server Reachability Test
 
+![DNS server reachability test showing 100 percent packet loss](screenshots/02-dns-server-reachability.png)
+
+*Figure 2 — Connectivity testing to the configured DNS server `192.0.2.1` resulted in 100% packet loss. This was treated as supporting evidence rather than definitive proof of DNS service failure because ICMP traffic may be blocked independently of DNS.*
 ### Determining the Root Cause
 
 The investigation determined that the workstation's NetworkManager connection profile contained an incorrect manually configured DNS server. The connection was also configured to ignore automatically supplied DNS settings.
