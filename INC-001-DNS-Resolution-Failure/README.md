@@ -60,6 +60,11 @@ ping -c 4 8.8.8.8
 The test completed successfully with four responses and 0% packet loss.
 
 These results demonstrated that the workstation retained external IP connectivity but was unable to resolve hostnames. This significantly narrowed the suspected fault domain from general network connectivity to DNS name resolution.
+### Evidence: Initial Network and DNS Diagnostics
+
+![Initial network diagnostics showing successful IP connectivity and failed hostname resolution](screenshots/01-initial-diagnostics.png)
+
+*Figure 1 — Initial diagnostics confirmed functional IPv4 addressing and routing, successful external connectivity to `8.8.8.8`, and failed hostname resolution. Resolver inspection identified `192.0.2.1` as the active DNS server.*
 
 ## Troubleshooting Process
 
