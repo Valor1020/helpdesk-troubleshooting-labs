@@ -137,6 +137,11 @@ sudo nmcli connection up netplan-ens33
 ```
 
 This removed the incorrect DNS override and allowed the workstation to resume using the DNS configuration provided by the network.
+### Evidence: DNS Remediation and Retest
+
+![DNS remediation commands and successful hostname retest](screenshots/03-remediation-and-retest.png)
+
+*Figure 3 — The incorrect manual DNS entry was removed, automatic DNS configuration was restored, and the NetworkManager connection was restarted. A subsequent test successfully resolved `google.com`, demonstrating that hostname resolution had been restored.*
 
 An earlier remediation attempt did not successfully remove the incorrect DNS configuration. Verification testing revealed that `192.0.2.1` remained configured as the active DNS server and hostname resolution continued to fail. The remediation procedure was therefore corrected and reapplied before the incident was considered resolved.
 
