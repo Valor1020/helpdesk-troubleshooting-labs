@@ -57,6 +57,8 @@ Please check the name and try again.
 
 Because direct IP connectivity worked while hostname resolution failed, the investigation shifted toward DNS and name-resolution behavior.
 
+![Initial DNS failure and resolver comparison](Screenshots/01-Initial-DNS-Failure-And-Resolver-Comparison.png)
+
 ---
 
 ## Troubleshooting Process
@@ -84,6 +86,8 @@ Connection-specific DNS Suffix: localdomain
 ```
 
 This established the network baseline before further troubleshooting.
+
+![Baseline network and adapter configuration](Screenshots/02-Baseline-Network-And-Adapter-Configuration.png)
 
 ---
 
@@ -272,6 +276,8 @@ Get-DnsClient
 
 This confirmed that `localdomain` was a connection-specific suffix associated with Ethernet0.
 
+![PowerShell DNS client suffix configuration](Screenshots/03-PowerShell-DNS-Client-Suffix.png)
+
 The configured DNS server was confirmed with:
 
 ```powershell
@@ -285,6 +291,8 @@ InterfaceIndex: 9
 AddressFamily:  IPv4
 ServerAddresses: 192.168.105.2
 ```
+
+![PowerShell DNS server and client details](Screenshots/04-PowerShell-DNS-Server-And-Client-Details.png)
 
 A general network configuration view was obtained with:
 
@@ -342,6 +350,8 @@ Connection-specific DNS Suffix: localdomain
 
 The return of `localdomain` after obtaining a fresh DHCP configuration demonstrated that the suffix was associated with the dynamically supplied network configuration.
 
+![DHCP release and renewal test](Screenshots/05-DHCP-Release-Renew-Test.png)
+
 ---
 
 ### 11. Retested the Original Failure
@@ -378,6 +388,8 @@ This demonstrated that restored hostname resolution was not limited to a single 
 
 This further demonstrated that the unusual `nslookup` output alone was not sufficient evidence of a DNS failure.
 
+![Post-resolution command-line verification](Screenshots/07-Post-Resolution-Verification.png)
+
 ---
 
 ### 13. Verified User-Facing Web Connectivity
@@ -390,6 +402,10 @@ The following websites loaded successfully:
 - Microsoft
 
 This confirmed that the original user-facing network functionality had been restored rather than relying solely on successful diagnostic commands.
+
+![Google browser connectivity verification](Screenshots/06-Google-Browser-Connectivity-Verification.png)
+
+![Microsoft browser connectivity verification](Screenshots/08-Microsoft-Browser-Connectivity-Verification.png)
 
 ---
 
