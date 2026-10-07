@@ -70,9 +70,9 @@ ping 8.8.8.8
 
 Result:
 
-- 4 packets sent
-- 0 received
-- 100% packet loss
+```text
+Packets: Sent = 4, Received = 0, Lost = 4 (100% loss)
+```
 
 DNS/name resolution was then tested:
 
@@ -84,6 +84,7 @@ Windows returned:
 
 ```text
 Ping request could not find host google.com.
+Please check the name and try again.
 ```
 
 At this stage, both external IP connectivity and hostname resolution were unavailable.
@@ -207,10 +208,10 @@ ping 8.8.8.8
 Result:
 
 ```text
-Sent = 4, Received = 4, Lost = 0 (0% loss)
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
 ```
 
-DNS resolution and connectivity were verified:
+DNS resolution and connectivity were then verified:
 
 ```cmd
 ping google.com
@@ -265,7 +266,7 @@ Asking this earlier could have identified the recent network driver update soone
 
 The incident also demonstrated that physical Ethernet LINK/ACT indicators do not guarantee valid Layer 3 network configuration. The workstation maintained physical link while DHCP negotiation was failing.
 
-Finally, testing with a known-good connection helped isolate the problem to the endpoint before making more invasive network changes.
+Testing with a known-good connection also helped isolate the problem to the endpoint before making more invasive network changes.
 
 ---
 
@@ -273,12 +274,14 @@ Finally, testing with a known-good connection helped isolate the problem to the 
 
 - Help desk ticket lifecycle management
 - End-user information gathering
+- Incident triage
 - Incident documentation
 - Windows 11 troubleshooting
 - TCP/IP troubleshooting
 - DHCP troubleshooting
 - APIPA identification
-- Connectivity and DNS testing
+- Connectivity testing
+- DNS resolution testing
 - Windows Services administration
 - Device Manager troubleshooting
 - Driver rollback
@@ -290,6 +293,114 @@ Finally, testing with a known-good connection helped isolate the problem to the 
 
 ---
 
-## Evidence
+# Evidence
 
-Screenshots documenting the Spiceworks ticket lifecycle, troubleshooting notes, resolution, verification, and closed ticket status are included in the `evidence` directory.
+The following screenshots document the simulated incident from ticket intake through troubleshooting, verification, resolution, and closure.
+
+## 1. Ticket Intake and Troubleshooting
+
+The original user report and technician documentation show the initial scope, failed connectivity testing, APIPA identification, DHCP troubleshooting, known-good connection testing, and discovery of the recent Realtek network driver update.
+
+![Spiceworks ticket intake and troubleshooting](evidence/01-spiceworks-ticket-intake-and-troubleshooting.png)
+
+---
+
+## 2. Post-Remediation Verification
+
+After rolling back the affected network adapter driver, DHCP configuration, external IP connectivity, DNS resolution, and access to required work applications were verified.
+
+![Spiceworks verification notes](evidence/02-spiceworks-verification-notes.png)
+
+---
+
+## 3. Root Cause and Resolution
+
+The final technician documentation records the driver rollback, restored DHCP functionality, successful connectivity testing, identified root cause, and confirmed resolution.
+
+![Spiceworks resolution and closure](evidence/03-spiceworks-resolution-and-closure.png)
+
+---
+
+## 4. Closed Ticket
+
+The completed Spiceworks ticket was classified as a **Network** incident with **Medium** priority and closed after successful user verification.
+
+![Spiceworks closed ticket summary](evidence/04-spiceworks-closed-ticket-summary.png)
+
+---
+
+# Incident Outcome
+
+| Field | Result |
+|---|---|
+| **Status** | Resolved and Closed |
+| **Category** | Network |
+| **Priority** | Medium |
+| **Affected Users** | One |
+| **Root Cause** | Realtek Ethernet driver update prevented successful DHCP lease acquisition |
+| **Remediation** | Rolled back the affected network adapter driver |
+| **Verification** | Valid DHCP lease restored, external IP connectivity confirmed, DNS resolution confirmed, and required user applications successfully tested |
+
+---
+
+## Troubleshooting Workflow
+
+```text
+User reports no internet
+        ↓
+Determine scope
+        ↓
+Single workstation affected
+        ↓
+Verify physical Ethernet link
+        ↓
+Test external IP connectivity
+        ↓
+FAILED
+        ↓
+Test DNS resolution
+        ↓
+FAILED
+        ↓
+Inspect IP configuration
+        ↓
+169.254.x.x APIPA address
+        ↓
+Attempt DHCP release/renew
+        ↓
+DHCP renewal FAILED
+        ↓
+Verify DHCP Client service
+        ↓
+Running / Automatic
+        ↓
+Test known-good network connection
+        ↓
+Problem persists
+        ↓
+Shift investigation to endpoint
+        ↓
+Ask "What changed?"
+        ↓
+Recent Realtek network driver update identified
+        ↓
+Rollback network adapter driver
+        ↓
+DHCP lease restored
+        ↓
+Verify IP connectivity
+        ↓
+Verify DNS resolution
+        ↓
+Verify user applications
+        ↓
+RESOLVED
+```
+
+---
+
+## Key Takeaway
+
+This incident demonstrated that successful troubleshooting is not simply a matter of knowing commands. Each test should answer a specific question and either strengthen or eliminate a hypothesis.
+
+The troubleshooting process progressively narrowed the problem from a broad report of "no internet" to a specific endpoint driver failure by combining user questioning, network-layer testing, known-good substitution, change investigation, remediation, and verification.
